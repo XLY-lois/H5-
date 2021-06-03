@@ -5,7 +5,7 @@
       <message v-show="active === 2"></message>
       <my v-show="active === 3"></my>
     </div>
-    <van-tabbar v-model="active">
+    <van-tabbar v-model="active" active-color="#6699CC" inactive-color="#333333">
       <van-tabbar-item icon="home-o">首页</van-tabbar-item>
       <van-tabbar-item icon="search">待定</van-tabbar-item>
       <van-tabbar-item icon="friends-o">消息</van-tabbar-item>
@@ -34,6 +34,8 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+@bule: #6699CC;
+@yellow: #FFCC33;
 .home {
   width: 100%;
   .container{
