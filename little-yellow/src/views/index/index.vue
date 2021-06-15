@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="">
     <div class="header-container">
       <van-row >
         <van-col span="4">
@@ -91,7 +91,7 @@ export default {
 .container {
   width: 100%;
   .header-container {
-      margin-top: 5px;
+    margin-top: 5px;
     width: 100%;
     height: 50px;
     line-height: 50px;

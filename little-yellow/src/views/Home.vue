@@ -2,6 +2,7 @@
   <div class="home">
     <div class="container">
       <index v-show="active === 0"></index>
+      <search v-show="active === 1"></search>
       <message v-show="active === 2"></message>
       <my v-show="active === 3"></my>
     </div>
@@ -16,6 +17,7 @@
 
 <script>
 import index from "./index"
+import search from "./search"
 import message from "./message"
 import my from "./my"
 
@@ -28,13 +30,14 @@ export default {
   },
   components: {
     index,
+    search,
     message,
     my
   },
 };
 </script>
 <style lang="less" scoped>
-@bule: #6699CC;
+@blue: #6699CC;
 @yellow: #FFCC33;
 .home {
   width: 100%;
