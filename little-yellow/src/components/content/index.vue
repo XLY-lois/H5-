@@ -18,7 +18,7 @@ export default {
     card,
   },
   mounted(){
-    console.log(this.content)
+    // console.log(this.content)
   }
 };
 </script>
