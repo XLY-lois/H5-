@@ -12,6 +12,10 @@
         <div class="user-name">name</div>
       </div>
     </div>
+    <div class="color1"></div>
+    <div class="color2"></div>
+    <div class="color3"></div>
+    <div class="color4"></div>
   </div>
 </template>
 <style scoped lang="less">

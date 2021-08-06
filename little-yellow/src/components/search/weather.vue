@@ -1,6 +1,5 @@
 <template>
   <div class="search-cotainer">
-      weather
     <van-search
       v-model="city"
       placeholder="请输入所要查询天气的城市"
@@ -25,11 +24,12 @@
         <div class="city">{{ city }}</div>
       </div>
     </div>
-    <div class="future-card">
+    <div class="future-card" v-if="showCard">
       <div class="future-box" v-for="item in future" :key="item.date">
         <div class="left-container">
-          <div>{{ item.weather }}
-            <img 
+          <div>
+            {{ item.weather }}
+            <img
               class="icon"
               alt="noicon"
               :src="getWeatherIcon(item.weather)"
@@ -82,9 +82,7 @@ export default {
       },
     };
   },
-  computed:{
-
-  },
+  computed: {},
   watch: {
     city(val) {
       if (val == "") {
@@ -97,29 +95,31 @@ export default {
   },
   methods: {
     drawLine() {
-      let myChart = this.$echarts.init(document.getElementById("myChart"));
-      // 绘制图表
-      let dateList = [];
-      let heightTemp = [];
-      let lowTemp = [];
-      this.future.forEach(function (item) {
-        dateList.push(item.date);
-        let tempList = item.temperature.split("/");
-        heightTemp.push(Number(tempList[1].replace(/[^0-9]/gi, "")));
-        lowTemp.push(Number(tempList[0]));
+      this.$nextTick(function () {
+        let myChart = this.$echarts.init(document.getElementById("myChart"));
+        // 绘制图表
+        let dateList = [];
+        let heightTemp = [];
+        let lowTemp = [];
+        this.future.forEach(function (item) {
+          dateList.push(item.date);
+          let tempList = item.temperature.split("/");
+          heightTemp.push(Number(tempList[1].replace(/[^0-9]/gi, "")));
+          lowTemp.push(Number(tempList[0]));
+        });
+        this.option.series[1] = {
+          name: "最低温度",
+          type: "line",
+          data: lowTemp,
+        };
+        this.option.series[0] = {
+          name: "最高温度",
+          type: "line",
+          data: heightTemp,
+        };
+        this.option.xAxis.data = dateList;
+        myChart.setOption(this.option);
       });
-      this.option.series[1] = {
-        name: "最低温度",
-        type: "line",
-        data: lowTemp,
-      };
-      this.option.series[0] = {
-        name: "最高温度",
-        type: "line",
-        data: heightTemp,
-      };
-      this.option.xAxis.data = dateList;
-      myChart.setOption(this.option);
     },
     async onSearch() {
       await this.$http
@@ -186,21 +186,42 @@ export default {
       // this.chartData.lowTemp = lowTemp;
       // console.log(this.chartData.lowTemp);
     },
-    getWeatherIcon(info){
-      let iconUrl = ''
-      switch(info) {
-        case '大雨':
-          iconUrl = require('../../assets/icon/dayu.png')
-          break;
-        case '雷阵雨':
-          iconUrl = require('../../assets/icon/leizhenyu.png')
-          break;
-        case '阵雨':
-          iconUrl = require('../../assets/icon/zhenyu.png')
-          break;
+    getWeatherIcon(info) {
+      let iconUrl = "";
+      if (info) {
+        if (info.indexOf("转") > 0) {
+          let infoList = info.split("转");
+          info = infoList[0];
+        }
+        switch (info) {
+          case "大雨":
+            iconUrl = require("../../assets/icon/dayu.png");
+            break;
+          case "雷阵雨":
+            iconUrl = require("../../assets/icon/leizhenyu.png");
+            break;
+          case "阵雨":
+            iconUrl = require("../../assets/icon/zhenyu.png");
+            break;
+          case "中雨":
+            iconUrl = require("../../assets/icon/zhongyu.png");
+            break;
+          case "小雨":
+            iconUrl = require("../../assets/icon/xiaoyu.png");
+            break;
+          case "晴":
+            iconUrl = require("../../assets/icon/qingtian.png");
+            break;
+          case "多云":
+            iconUrl = require("../../assets/icon/duoyun.png");
+            break;
+          case "阴":
+            iconUrl = require("../../assets/icon/yintian.png");
+            break;
+        }
       }
-      return iconUrl
-    }
+      return iconUrl;
+    },
   },
 };
 </script>
@@ -209,6 +230,7 @@ export default {
 .search-cotainer {
   // background-color: rgb(224, 224, 224);
   margin-bottom: 50px;
+  margin-top: 20px;
   height: 100%;
   .weather-card {
     box-sizing: content-box;
@@ -275,7 +297,6 @@ export default {
         }
       }
       .right-container {
-
       }
     }
   }

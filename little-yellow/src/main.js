@@ -6,6 +6,7 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 import axios from 'axios'
 import echarts from 'echarts'
+import './mock'
 
 Vue.config.productionTip = false
 Vue.use(Vant)

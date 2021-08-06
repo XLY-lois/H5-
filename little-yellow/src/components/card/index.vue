@@ -1,7 +1,8 @@
 <template>
   <div class="card-container">
     <!-- <img class="card-img" :src="url"/> -->
-    <div class="card-img"></div>
+    <div class="card-img" :style="`background:${cardItem.color}`"></div>
+    <div class="card-title">{{ cardItem.title }}</div>
     <div class="card-content">{{ cardItem.content }}</div>
   </div>
 </template>
@@ -22,18 +23,21 @@ export default {
 .card-container {
   width: 100%;
   height: 200px;
-  background-color: pink;
+  background-color: #fff;
   border-radius: 2%;
   .card-img {
     margin: 5px;
     height: 150px;
-    background-color: #fff;
+    background-color: #f6f5ec;
   }
-  .card-content {
+  .card-title {
     text-align: left;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  .card-content{
+
   }
 }
 </style>

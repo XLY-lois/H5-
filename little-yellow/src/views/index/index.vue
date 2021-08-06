@@ -18,13 +18,13 @@
           </van-tabs>
         </van-col>
         <van-col span="4">
-          <div>
+          <div @click="jumpTo('/searchPage')">
             <van-icon name="search" />
           </div>
         </van-col>
       </van-row>
     </div>
-    <Content :content="content"></Content>
+    <Content :active="active" :content="content"></Content>
   </div>
 </template>
 <script>
@@ -33,43 +33,7 @@ export default {
   data() {
     return {
       active: 0,
-      content:[
-        {
-          id:0,
-          url:'@/assets/imgs/img01.jpeg',
-          content:'随便说点啥嘛dfs'
-        },
-        {
-          id:1,
-          url:'@/assets/imgs/img02.jpg',
-          content:'随便说点啥嘛4416'
-        },
-        {
-          id:2,
-          url:'@/assets/imgs/img03.jpg',
-          content:'随便说点啥嘛asasd'
-        },
-        {
-          id:3,
-          url:'@/assets/imgs/img04.jpg',
-          content:'随便说点啥嘛asssaaaaa'
-        },
-        {
-          id:4,
-          url:'@/assets/imgs/img05.jpg',
-          content:'随便说点啥嘛'
-        },
-        {
-          id:5,
-          url:'@/assets/imgs/img06.jpg',
-          content:'随便说点啥嘛aaaaaaaaaaaa'
-        },
-        {
-          id:6,
-          url:'@/assets/imgs/img07.jpg',
-          content:'随便说点啥嘛ddd'
-        }
-      ]
+      content:[]
     };
   },
   components:{
@@ -77,12 +41,23 @@ export default {
   },
   watch:{
     active:function(val){
-      
+      this.getNoteList()
     }
   },
+  mounted(){
+     this.getNoteList()
+  },
   methods:{
-    changeClass(){
+    changeClass() {
 
+    },
+    jumpTo(url) {
+      this.$router.push(url)
+    },
+    async getNoteList(){
+      await this.$http.get('/getNoteList').then(res=>{
+        this.content = res.data.noteList
+      })
     }
   }
 };
@@ -90,6 +65,7 @@ export default {
 <style lang="less" scoped>
 .container {
   width: 100%;
+  margin-bottom: 50px;
   .header-container {
     margin-top: 5px;
     width: 100%;
